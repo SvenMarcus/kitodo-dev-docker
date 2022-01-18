@@ -2,5 +2,8 @@
     "build": {
         "dockerfile": "../Dockerfile"
     },
-    "workspaceFolder": "/root/kitodo-production"
+    "workspaceFolder": "/root/kitodo-production",
+    "extensions": [
+        "vscjava.vscode-java-pack"
+    ]
 }
