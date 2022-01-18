@@ -33,21 +33,11 @@ RUN mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/log
     chmod -w kitodo/config kitodo/import kitodo/messages kitodo/plugins kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac kitodo/plugins/step kitodo/plugins/validation kitodo/rulesets kitodo/scripts kitodo/xslt
 
 
+COPY initialsetup.sh /root/initialsetup.sh
+RUN bash /root/initialsetup.sh
+
+
+COPY entrypoint.sh /root/entrypoint.sh
+ENTRYPOINT [ "bash", "/root/entrypoint.sh" ]
+
 WORKDIR /root/kitodo-production
-RUN service mysql start && \
-    mysql -e "create database kitodo;create user 'kitodo'@'localhost' identified by 'kitodo';grant all on kitodo.* to 'kitodo'@'localhost';flush privileges;" && \
-    mysql -u kitodo -D kitodo --password=kitodo < $HOME/kitodo-production/Kitodo/setup/schema.sql && \
-    mysql -u kitodo -D kitodo --password=kitodo < $HOME/kitodo-production/Kitodo/setup/default.sql && \
-    mkdir config-local && \
-    cp Kitodo/src/main/resources/hibernate.cfg.xml $HOME/kitodo-production/config-local/hibernate.cfg.xml && \
-    cp Kitodo/src/main/resources/kitodo_config.properties $HOME/kitodo-production/config-local/kitodo_config.properties && \
-    mvn clean install -DskipTests && \
-    cd Kitodo-DataManagement && \
-    mvn flyway:baseline -Pflyway && \
-    mvn flyway:migrate -Pflyway && \
-    mysqldump -u kitodo --password=kitodo kitodo > kitodo-3.sql && \
-    cd $HOME/kitodo-production
-
-
-COPY entrypoint.sh .
-ENTRYPOINT [ "bash", "entrypoint.sh" ]
