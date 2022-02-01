@@ -1,10 +1,11 @@
-FROM tomcat:10-jdk11-temurin-focal
+FROM tomcat:9.0.58-jdk11-temurin-focal
+
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y \
     software-properties-common \
-    wget git maven mysql-server gnupg2 \
+    wget git maven mariadb-server-10.3 gnupg2 \
     imagemagick slapd ldap-utils samba \
     apt-transport-https unzip dos2unix
 
@@ -33,11 +34,11 @@ RUN mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/log
     chmod -w kitodo/config kitodo/import kitodo/messages kitodo/plugins kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac kitodo/plugins/step kitodo/plugins/validation kitodo/rulesets kitodo/scripts kitodo/xslt
 
 
+COPY mariadb_adjustments /root/mariadb_adjustments
 COPY initialsetup.sh /root/initialsetup.sh
-RUN bash /root/initialsetup.sh
-
-
 COPY entrypoint.sh /root/entrypoint.sh
+COPY deploy.sh /root/deploy.sh
 ENTRYPOINT [ "bash", "/root/entrypoint.sh" ]
 
 WORKDIR /root/kitodo-production
+CMD [ "$CATALINE_HOME/bin/catalina.sh", "run" ]

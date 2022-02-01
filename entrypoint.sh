@@ -1,4 +1,5 @@
-service elasticsearch start
 service mysql start
 
-exec /bin/bash
+bash /root/initialsetup.sh
+
+"$@"
