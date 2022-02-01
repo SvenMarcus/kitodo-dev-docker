@@ -8,6 +8,13 @@ This repository contains the `Dockerfile` and `devcontainer.json` to develop Kit
 2. Clone the repository and open it with VS Code.
 3. Click the blue icon in the lower left corner and select `Reopen in Container`.
 
+## Deploying Kitodo locally
+When attached to the container, run the following command from inside the `kitodo-production` directory:
+
+```bash
+bash ../deploy.sh
+```
+
 ## Note
 
 The Kitodo Production files are only available inside the container, this means when the container gets deleted, your local changes will be gone.
