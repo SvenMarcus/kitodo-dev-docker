@@ -1,6 +1,3 @@
-service mysql start
-service elasticsearch start
-
 echo "Building Kitodo in production mode"
 mvn clean install '-P!development'
 
@@ -17,4 +14,4 @@ echo "Copying configuration files"
 rm -rf $CATALINA_HOME/webapps/kitodo/
 cp -r $KITODO_NAME $CATALINA_HOME/webapps/kitodo
 
-catalina.sh run
+# catalina.sh run

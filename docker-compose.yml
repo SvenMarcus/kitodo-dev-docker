@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  kitodo:
+    depends_on:
+      - mariadb
+      - elasticsearch
+
+    build:
+      context: .
+      dockerfile: Dockerfile.kitodo
+
+    ports:
+      - "80:8080"
+
+    volumes:
+      - ./kitodo-production:/root/kitodo-production:rw
+
+    command: bash entrypoint.sh
+
+  mariadb:
+    image: mariadb:10.3-focal
+
+    environment:
+      - MARIADB_USER=kitodo
+      - MARIADB_PASSWORD=kitodo
+      - MARIADB_ROOT_PASSWORD=s3cret-r00t-p4ssw0rd
+      - MARIADB_DATABASE=kitodo
+
+    ports:
+      - 3306:3306
+
+  elasticsearch:
+    image: elasticsearch:7.16.3
+
+    environment:
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - cluster.name=kitodo
+      - node.name=kitodo-1
+
+    ports:
+      - 9200:9200
+      - 9300:9300

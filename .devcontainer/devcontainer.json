@@ -1,8 +1,8 @@
 {
-    "build": {
-        "dockerfile": "../Dockerfile"
-    },
+    "dockerComposeFile": "../docker-compose.yml",
+    "service": "kitodo",
     "workspaceFolder": "/root/kitodo-production",
+    "shutdownAction": "stopCompose",
     "extensions": [
         "vscjava.vscode-java-pack"
     ],

@@ -25,7 +25,7 @@
         <property name="hibernate.connection.driver_class">org.mariadb.jdbc.Driver</property>
 
         <property name="hibernate.connection.url">
-            jdbc:mariadb://localhost/kitodo?useSSL=false
+            jdbc:mariadb://mariadb/kitodo?useSSL=false
         </property>
         <property name="hibernate.connection.username">kitodo</property>
         <property name="hibernate.connection.password">kitodo</property>
