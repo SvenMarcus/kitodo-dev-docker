@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<mets:mets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:kitodo="http://meta.kitodo.org/v1/" xmlns:mets="http://www.loc.gov/METS/">
+    <mets:metsHdr CREATEDATE="2022-02-02T11:05:19.786Z" LASTMODDATE="2022-02-02T11:06:05.142Z">
+        <mets:metsDocumentID>2</mets:metsDocumentID>
+    </mets:metsHdr>
+    <mets:dmdSec ID="uuid-acec9fd2-0dd1-3c9d-bc64-2a17881b169e">
+        <mets:mdWrap>
+            <mets:xmlData>
+                <kitodo:kitodo>
+                    <kitodo:metadata name="docType">Monograph</kitodo:metadata>
+                    <kitodo:metadata name="singleDigCollection">eins</kitodo:metadata>
+                    <kitodo:metadata name="slub_linktext">Katalognachweis</kitodo:metadata>
+                    <kitodo:metadata name="CatalogIDDigital">825772478</kitodo:metadata>
+                    <kitodo:metadata name="Link">http://deposit.d-nb.de/cgi-bin/dokserv?id=5250847&amp;prov=M&amp;dok_var=1&amp;dok_ext=htm</kitodo:metadata>
+                    <kitodo:metadata name="Owner">SBB-PK Berlin &lt;1+1A&gt;</kitodo:metadata>
+                    <kitodo:metadataGroup name="Person">
+                        <kitodo:metadata name="Role">Author</kitodo:metadata>
+                        <kitodo:metadata name="LastName">Bogade</kitodo:metadata>
+                        <kitodo:metadata name="FirstName">Maria</kitodo:metadata>
+                    </kitodo:metadataGroup>
+                    <kitodo:metadataGroup name="Person">
+                        <kitodo:metadata name="Role">Author</kitodo:metadata>
+                        <kitodo:metadata name="LastName">Dumas</kitodo:metadata>
+                        <kitodo:metadata name="FirstName">Kristina</kitodo:metadata>
+                    </kitodo:metadataGroup>
+                    <kitodo:metadataGroup name="Person">
+                        <kitodo:metadata name="Role">Author</kitodo:metadata>
+                        <kitodo:metadata name="LastName">Bayer</kitodo:metadata>
+                        <kitodo:metadata name="FirstName">Josef</kitodo:metadata>
+                    </kitodo:metadataGroup>
+                </kitodo:kitodo>
+            </mets:xmlData>
+        </mets:mdWrap>
+    </mets:dmdSec>
+    <mets:amdSec>
+        <mets:sourceMD ID="uuid-dd4ff3f6-eea4-3de5-a436-b2a900133451">
+            <mets:mdWrap>
+                <mets:xmlData>
+                    <kitodo:kitodo>
+                        <kitodo:metadata name="PublicationStart">1505</kitodo:metadata>
+                        <kitodo:metadata name="PlaceOfPublication">BerlinBetz2015</kitodo:metadata>
+                        <kitodo:metadata name="FormatSourcePrint">25 Seiten überwiegend Illustriert 300 mm x 240 mm 1 CD</kitodo:metadata>
+                        <kitodo:metadata name="DocLanguage">ger</kitodo:metadata>
+                        <kitodo:metadata name="TitleDocSub1">das Ballett nach Josef Bayer</kitodo:metadata>
+                        <kitodo:metadata name="TitleDocMain">Puppenfee</kitodo:metadata>
+                    </kitodo:kitodo>
+                </mets:xmlData>
+            </mets:mdWrap>
+        </mets:sourceMD>
+    </mets:amdSec>
+    <mets:fileSec/>
+    <mets:structMap TYPE="PHYSICAL">
+        <mets:div ID="uuid-bfe291ea-3a35-4e52-8535-7b97a7e0873d"/>
+    </mets:structMap>
+    <mets:structMap TYPE="LOGICAL">
+        <mets:div ID="uuid-0c417ab1-53bd-4459-8a25-818657f9f577" DMDID="uuid-acec9fd2-0dd1-3c9d-bc64-2a17881b169e" ADMID="uuid-dd4ff3f6-eea4-3de5-a436-b2a900133451" TYPE="PeriodicalVolume"/>
+    </mets:structMap>
+    <mets:structLink/>
+</mets:mets>

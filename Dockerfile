@@ -28,11 +28,16 @@ RUN mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/log
     kitodo/rulesets kitodo/scripts kitodo/temp kitodo/users kitodo/xslt && \
     install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/kitodo_*.xml kitodo/config/ && \
     install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/docket*.xsl kitodo/xslt/ && \
+    install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/xslt/*.xsl kitodo/xslt/ && \
+    install -m 444 $HOME/kitodo-production/Kitodo-XML-SchemaConverter/src/main/resources/xslt/pica2kitodo.xsl kitodo/xslt/ && \
+    install -m 444 $HOME/kitodo-production/Kitodo-XML-SchemaConverter/src/main/resources/xslt/mods2kitodo.xsl kitodo/xslt/ && \
     install -m 444 $HOME/kitodo-production/Kitodo/rulesets/*.xml kitodo/rulesets/ && \
     install -m 444 $HOME/kitodo-production/Kitodo/diagrams/*.xml kitodo/diagrams/ && \
     install -m 554 $HOME/kitodo-production/Kitodo/scripts/*.sh kitodo/scripts/ && \
     chmod -w kitodo/config kitodo/import kitodo/messages kitodo/plugins kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac kitodo/plugins/step kitodo/plugins/validation kitodo/rulesets kitodo/scripts kitodo/xslt
 
+COPY kitodo_premade_workflow/kitodo/ /usr/local/kitodo/
+COPY kitodo_premade_workflow/kitodo_starting_point.sql /root/kitodo_starting_point.sql
 
 COPY mariadb_adjustments /root/mariadb_adjustments
 COPY initialsetup.sh /root/initialsetup.sh
