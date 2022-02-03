@@ -10,13 +10,15 @@ services:
       context: .
       dockerfile: Dockerfile.kitodo
 
+    environment:
+      - KITODO_ES_HOST=elasticsearch
+      - KITODO_DB_HOST=mariadb
+      - KITODO_DB_PORT=3306
+      - KITODO_JDBC_DRIVER=org.mariadb.jdbc.Driver
+      - KITODO_JDBC_DRIVER_URL_COMPONENT=mariadb
+
     ports:
       - "80:8080"
-
-    volumes:
-      - ./kitodo-production:/root/kitodo-production:rw
-
-    command: bash entrypoint.sh
 
   mariadb:
     image: mariadb:10.3-focal

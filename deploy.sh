@@ -1,9 +1,12 @@
+KITODO_DIR=$HOME/kitodo-production
+cd $KITODO_DIR
+
 echo "Building Kitodo in production mode"
 mvn clean install '-P!development'
 
 echo "Copying Kitodo modules"
 mkdir -p /usr/local/kitodo/modules
-cp Kitodo/modules/* /usr/local/kitodo/modules/
+cp $HOME/Kitodo/modules/* /usr/local/kitodo/modules/
 
 KITODO_NAME=$(find Kitodo/target -maxdepth 1 -type d -name kitodo-*)
 

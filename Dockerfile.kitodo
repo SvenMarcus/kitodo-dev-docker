@@ -8,7 +8,7 @@ RUN export DEBIAN_FRONTEND=noninteractive && \
     imagemagick slapd ldap-utils samba \
     apt-transport-https unzip dos2unix
 
-COPY kitodo-production /root/kitodo-production
+RUN git clone https://github.com/kitodo/kitodo-production /root/kitodo-production
 
 WORKDIR /usr/local
 RUN mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/logs \
@@ -29,12 +29,12 @@ RUN mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/log
 COPY kitodo_premade_workflow/kitodo/ /usr/local/kitodo/
 COPY kitodo_premade_workflow/kitodo_starting_point.sql /root/kitodo_starting_point.sql
 
-COPY mariadb_adjustments /root/mariadb_adjustments
 COPY initialsetup.sh /root/initialsetup.sh
 COPY deploy.sh /root/deploy.sh
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /root/wait-for-it.sh
 
-ENTRYPOINT [ "bash", "/root/initialsetup.sh" ]
 
 WORKDIR /root/kitodo-production
+ENTRYPOINT [ "bash", "/root/initialsetup.sh" ]
+
 CMD [ "catalina.sh", "run" ]

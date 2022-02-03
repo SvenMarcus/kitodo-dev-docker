@@ -1,10 +1,21 @@
-echo "Copying MariaDB configuration files"
-cp $HOME/mariadb_adjustments/hibernate.cfg.xml $HOME/kitodo-production/Kitodo/src/main/resources/hibernate.cfg.xml
-cp $HOME/mariadb_adjustments/flyway.properties $HOME/kitodo-production/Kitodo-DataManagement/src/main/resources/db/config/flyway.properties
+echo "Setting maven preferences to allow insecure repositories"
+echo "MAVEN_OPTS=\"-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\"" >> $HOME/.mavenrc
+cat $HOME/.mavenrc
 
+JDBC_URL_PATTERN="s,\(jdbc:\)\(.*\)://\(.*\)/,\1${KITODO_JDBC_DRIVER_URL_COMPONENT}://${KITODO_DB_HOST}:${KITODO_DB_PORT}/,"
 
-$HOME/wait-for-it.sh -t 0 mariadb
+echo "Adjusting kitodo_config.properties"
+sed -i "s,^\(elasticsearch.host\)=.*,\1=${KITODO_ES_HOST}," $HOME/kitodo-production/Kitodo/src/main/resources/kitodo_config.properties
 
+echo "Adjusting hibernate.cfg.xml"
+sed -i $JDBC_URL_PATTERN $HOME/kitodo-production/Kitodo/src/main/resources/hibernate.cfg.xml 
+sed -i "s,\(<property name=\"hibernate.connection.driver_class\">\)\(.*\)\(<\/property>\),\1${KITODO_JDBC_DRIVER}\3," $HOME/kitodo-production/Kitodo/src/main/resources/hibernate.cfg.xml
+
+echo "Adjusting flyway.properties"
+sed -i $JDBC_URL_PATTERN $HOME/kitodo-production/Kitodo-DataManagement/src/main/resources/db/config/flyway.properties 
+
+chmod +x $HOME/wait-for-it.sh
+$HOME/wait-for-it.sh -t 0 -h mariadb -p 3306
 
 echo "Setting up Database"
 mysql -h mariadb -u kitodo -D kitodo --password=kitodo < $HOME/kitodo-production/Kitodo/setup/schema.sql 
@@ -16,13 +27,13 @@ cd $HOME/kitodo-production
 mkdir config-local 
 cp Kitodo/src/main/resources/hibernate.cfg.xml $HOME/kitodo-production/config-local/hibernate.cfg.xml 
 cp Kitodo/src/main/resources/kitodo_config.properties $HOME/kitodo-production/config-local/kitodo_config.properties 
-mvn clean install -DskipTests 
+mvn clean install -DskipTests
 
 
 echo "Running flyway migration"
 cd Kitodo-DataManagement 
-mvn flyway:baseline -Pflyway 
-mvn flyway:migrate -Pflyway 
+mvn flyway:baseline -Pflyway
+mvn flyway:migrate -Pflyway
 mysqldump -h mariadb -u kitodo --password=kitodo kitodo > kitodo-3.sql 
 
 
@@ -32,3 +43,9 @@ mysql -h mariadb -u kitodo -D kitodo --password=kitodo -e "insert ignore into ki
 
 echo "Loading premade workflow"
 mysql -h mariadb -u kitodo -D kitodo --password=kitodo < $HOME/kitodo_starting_point.sql
+
+
+bash $HOME/deploy.sh
+
+
+"$@"

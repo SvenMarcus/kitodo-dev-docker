@@ -6,5 +6,4 @@
     "extensions": [
         "vscjava.vscode-java-pack"
     ],
-    "postStartCommand": "bash /root/entrypoint.sh"
 }
