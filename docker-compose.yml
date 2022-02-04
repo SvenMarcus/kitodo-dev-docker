@@ -17,6 +17,9 @@ services:
       - KITODO_JDBC_DRIVER=org.mariadb.jdbc.Driver
       - KITODO_JDBC_DRIVER_URL_COMPONENT=mariadb
 
+    volumes:
+      - ${KITODO_PATH}:/root/kitodo-production:rw
+
     ports:
       - "80:8080"
 
