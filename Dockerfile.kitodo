@@ -16,6 +16,9 @@ COPY initialsetup.sh /root/initialsetup.sh
 COPY deploy.sh /root/deploy.sh
 ADD https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh /root/wait-for-it.sh
 
+RUN dos2unix /root/initialsetup.sh && \
+    dos2unix /root/deploy.sh && \
+    dos2unix /root/kitodo_starting_point.sql
 
 WORKDIR /root/kitodo-production
 ENTRYPOINT [ "bash", "/root/initialsetup.sh" ]
