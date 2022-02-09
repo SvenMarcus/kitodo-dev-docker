@@ -2,6 +2,25 @@ echo "Setting maven preferences to allow insecure repositories"
 echo "MAVEN_OPTS=\"-Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true -Dmaven.wagon.http.ssl.ignore.validity.dates=true\"" >> $HOME/.mavenrc
 cat $HOME/.mavenrc
 
+
+echo "Creating Kitodo config directories"
+cd /usr/local
+mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/logs
+kitodo/messages kitodo/metadata kitodo/modules kitodo/plugins
+kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac
+kitodo/plugins/step kitodo/plugins/validation
+kitodo/rulesets kitodo/scripts kitodo/temp kitodo/users kitodo/xslt 
+install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/kitodo_*.xml kitodo/config/ 
+install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/docket*.xsl kitodo/xslt/ 
+install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/xslt/*.xsl kitodo/xslt/ 
+install -m 444 $HOME/kitodo-production/Kitodo-XML-SchemaConverter/src/main/resources/xslt/pica2kitodo.xsl kitodo/xslt/ 
+install -m 444 $HOME/kitodo-production/Kitodo-XML-SchemaConverter/src/main/resources/xslt/mods2kitodo.xsl kitodo/xslt/ 
+install -m 444 $HOME/kitodo-production/Kitodo/rulesets/*.xml kitodo/rulesets/ 
+install -m 444 $HOME/kitodo-production/Kitodo/diagrams/*.xml kitodo/diagrams/ 
+install -m 554 $HOME/kitodo-production/Kitodo/scripts/*.sh kitodo/scripts/ 
+chmod -w kitodo/config kitodo/import kitodo/messages kitodo/plugins kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac kitodo/plugins/step kitodo/plugins/validation kitodo/rulesets kitodo/scripts kitodo/xslt
+
+
 JDBC_URL_PATTERN="s,\(jdbc:\)\(.*\)://\(.*\)/,\1${KITODO_JDBC_DRIVER_URL_COMPONENT}://${KITODO_DB_HOST}:${KITODO_DB_PORT}/,"
 
 echo "Adjusting kitodo_config.properties"
@@ -14,8 +33,10 @@ sed -i "s,\(<property name=\"hibernate.connection.driver_class\">\)\(.*\)\(<\/pr
 echo "Adjusting flyway.properties"
 sed -i $JDBC_URL_PATTERN $HOME/kitodo-production/Kitodo-DataManagement/src/main/resources/db/config/flyway.properties 
 
+echo "Waiting for Database"
 chmod +x $HOME/wait-for-it.sh
 $HOME/wait-for-it.sh -t 0 -h mariadb -p 3306
+
 
 echo "Setting up Database"
 mysql -h mariadb -u kitodo -D kitodo --password=kitodo < $HOME/kitodo-production/Kitodo/setup/schema.sql 
