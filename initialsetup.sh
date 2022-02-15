@@ -5,11 +5,15 @@ cat $HOME/.mavenrc
 
 echo "Creating Kitodo config directories"
 cd /usr/local
-mkdir -p kitodo/config kitodo/debug kitodo/diagrams kitodo/import kitodo/logs
-kitodo/messages kitodo/metadata kitodo/modules kitodo/plugins
-kitodo/plugins/command kitodo/plugins/import kitodo/plugins/opac
-kitodo/plugins/step kitodo/plugins/validation
-kitodo/rulesets kitodo/scripts kitodo/temp kitodo/users kitodo/xslt 
+mkdir -p kitodo
+
+cd /usr/local/kitodo
+mkdir -p config debug diagrams import logs messages metadata modules plugins  rulesets scripts temp users xslt 
+
+cd /usr/local/plugins
+mkdir -p command import opac step validation
+
+cd /usr/local
 install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/kitodo_*.xml kitodo/config/ 
 install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/docket*.xsl kitodo/xslt/ 
 install -m 444 $HOME/kitodo-production/Kitodo/src/main/resources/xslt/*.xsl kitodo/xslt/ 
